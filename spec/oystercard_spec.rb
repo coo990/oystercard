@@ -24,4 +24,32 @@ describe Oystercard do
       expect(subject.deduct(10)).to eq(40)
     end
   end
+
+  describe '#touch_in' do
+    it 'updates the card to be touched' do
+      subject.touch_in
+      expect(subject.journey_status).to eq true
+    end
+  end
+
+  describe '#touch_out' do
+    it 'updates the card to be touched out' do
+      subject.touch_in
+      subject.touch_out
+      expect(subject.journey_status).to eq false
+    end
+  end
+
+  describe '#in_journey' do
+    it 'lets us kow if we are touched in' do
+      subject.touch_in
+      expect(subject.in_journey?).to eq 'In use'
+    end
+
+    it 'lets us know if we are touched out' do
+      subject.touch_in
+      subject.touch_out
+      expect(subject.in_journey?).to eq 'Not touched on'
+    end
+  end
 end
