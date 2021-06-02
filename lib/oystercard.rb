@@ -3,7 +3,7 @@ class Oystercard
   attr_accessor :journey_status
 
   MAXIMUM_BALANCE = 90
-  MINIMUM_BALANCE = 1
+  MINIMUM_FARE = 1
   STARTING_BALANCE = 0
 
   def initialize
@@ -16,20 +16,23 @@ class Oystercard
     @balance += amount
   end
 
-  def deduct(amount)
-    @balance -= amount
-  end
-
   def touch_in
-    fail 'Not enough in minimum balance' if @balance <= MINIMUM_BALANCE
+    fail 'Not enough in minimum balance' if @balance <= MINIMUM_FARE
     @journey_status = true
   end
 
   def touch_out
+    deduct(MINIMUM_FARE)
     @journey_status = false
   end
   
   def in_journey?
     @journey_status == true ? 'In use' : 'Not touched on'
+  end
+
+  private
+
+  def deduct(amount)
+    @balance -= amount
   end
 end

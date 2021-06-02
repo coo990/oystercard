@@ -18,13 +18,6 @@ describe Oystercard do
 
   end
 
-  describe '#deduct' do
-    it 'deducts amount from oystercard' do
-      subject.top_up(50)
-      expect(subject.deduct(10)).to eq(40)
-    end
-  end
-
   describe '#touch_in' do
     it 'updates the card to be touched' do
       subject.top_up(20)
@@ -32,7 +25,7 @@ describe Oystercard do
       expect(subject.journey_status).to eq true
     end
     it 'raises an error if there is not enough money' do
-      minimum_balance = Oystercard::MINIMUM_BALANCE
+      minimum_balance = Oystercard::MINIMUM_FARE
       expect{ subject.touch_in }.to raise_error 'Not enough in minimum balance'
     end
   end
@@ -43,6 +36,13 @@ describe Oystercard do
       subject.touch_in
       subject.touch_out
       expect(subject.journey_status).to eq false
+    end
+
+    it 'deducts minimum fare when touched out' do
+      subject.top_up(20)
+      minimum_fare = Oystercard::MINIMUM_FARE - Oystercard::MINIMUM_FARE * 2
+      subject.touch_in
+      expect {subject.touch_out}.to change{subject.balance}.by(minimum_fare)
     end
   end
 
