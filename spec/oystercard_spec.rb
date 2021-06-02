@@ -17,4 +17,11 @@ describe Oystercard do
     end
 
   end
+
+  describe '#deduct' do
+    it 'deducts amount from oystercard' do
+      subject.top_up(50)
+      expect(subject.deduct(10)).to eq(40)
+    end
+  end
 end
