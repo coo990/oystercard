@@ -101,7 +101,7 @@ describe Oystercard do
     subject.top_up(10)
     subject.touch_in(entry_station)
     subject.touch_out(exit_station)
-    expect(subject.journeys).to include journey
+    expect(subject.journey).to include journey
   end
 
-end
+end 
