@@ -1,9 +1,9 @@
 class Station
   attr_reader :zone, :station_name
 
-  def initialize(args = {})
-    @zone = args[:zone]
-    @station_name = args[:station_name]
+  def initialize(arg = {})
+    @zone = arg[:zone]
+    @station_name = arg[:station_name]
   end
 
 end
